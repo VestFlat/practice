@@ -1,0 +1,117 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Моя страница</title>
+    <style>
+        /* Стили для создания привлекательного внешнего вида страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333333;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Моя страница</h1>
+
+        <button class="btn" onclick="changeContent()">Изменить содержимое</button>
+
+        <p id="content">Добро пожаловать на мою страницу!</p>
+
+        <form onsubmit="return validateForm()" action="save_data.php" method="post">
+            <input type="text" id="name" name="name" placeholder="Введите имя">
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
+
+    <script>
+        // JavaScript-код для добавления интерактивности на странице
+
+        // Функция для изменения содержимого страницы по нажатию кнопки
+        function changeContent() {
+            var paragraph = document.getElementById("content");
+            paragraph.innerHTML = "Содержимое изменено!";
+        }
+
+        // Функция для валидации формы перед отправкой
+        function validateForm() {
+            var nameInput = document.getElementById("name");
+            var name = nameInput.value.trim();
+
+            if (name === "") {
+                alert("Пожалуйста, введите имя");
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+И PHP код:
+
+php
+<?php
+// save_data.php
+
+// Получить данные, которые были отправлены на сервер
+$name = $_POST["name"];
+
+// Сохранить данные в файл
+$file = fopen("data.txt", "w");
+fwrite($file, $name);
+fclose($file);
+
+// Отправить ответ об успешном сохранении
+echo "Данные успешно сохранены!";
+?>

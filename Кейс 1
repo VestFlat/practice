@@ -1,0 +1,68 @@
+python
+# Создаем пустой список для хранения истории операций
+history = []
+
+# Функция для выполнения арифметической операции
+def perform_operation(num1, num2, operator):
+    # Обработка операторов '+', '-', '*' и '/'
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        # Обработка деления на ноль
+        if num2 == 0:
+            raise Exception("Ошибка: деление на ноль")
+        result = num1 / num2
+    else:
+        raise ValueError("Ошибка: некорректный оператор")
+
+    # Добавляем операцию в историю
+    history.append(f"{num1} {operator} {num2} = {result}")
+
+    return result
+
+# Функция для очистки истории
+def clear_history():
+    history.clear()
+
+# Основной цикл программы
+while True:
+    try:
+        # Получаем ввод от пользователя
+        num1 = float(input("Введите первое число: "))
+        operator = input("Введите оператор (+, -, *, /): ")
+        num2 = float(input("Введите второе число: "))
+
+        # Выполняем арифметическую операцию
+        result = perform_operation(num1, num2, operator)
+
+        # Выводим результат
+        print("Результат:", result)
+
+        # Предлагаем пользователю ввести новые числа и оператор или очистить историю
+        choice = input("Хотите выполнить еще одну операцию? (д/н): ")
+        if choice.lower() == 'н':
+            break
+        elif choice.lower() == 'д':
+            continue
+        else:
+            raise ValueError("Ошибка: некорректный выбор")
+
+    except ValueError:
+        print("Ошибка: некорректный ввод данных")
+    except Exception as e:
+        print(str(e))
+
+# Выводим историю операций
+print("История операций:")
+for operation in history:
+    print(operation)
+
+# Предлагаем пользователю очистить историю
+choice = input("Очистить историю операций? (д/н): ")
+if choice.lower() == 'д':
+    clear_history()
+    print("История операций очищена")

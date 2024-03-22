@@ -1,0 +1,124 @@
+import os
+
+def show_current_directory():
+    """
+    Функция отображает содержимое текущей директории, включая файлы и поддиректории.
+    """
+    # Получаем список файлов и папок в текущей директории
+    files = os.listdir()
+    
+    # Отображаем все элементы списка
+    for file in files:
+        print(file)
+        
+        
+def create_file(file_name):
+    """
+    Функция создает новый файл с заданным именем.
+    """
+    # Создаем новый файл в текущей директории
+    with open(file_name, 'w') as file:
+        pass
+    
+    
+def create_directory(directory_name):
+    """
+    Функция создает новую директорию с заданным именем.
+    """
+    # Создаем новую директорию в текущей директории
+    os.mkdir(directory_name)
+    
+    
+def delete_file(file_name):
+    """
+    Функция удаляет существующий файл с заданным именем.
+    """
+    # Удаляем файл из текущей директории
+    os.remove(file_name)
+    
+    
+def delete_directory(directory_name):
+    """
+    Функция удаляет существующую директорию с заданным именем.
+    """
+    # Удаляем директорию из текущей директории
+    os.rmdir(directory_name)
+    
+    
+def move_file(source_path, destination_path):
+    """
+    Функция перемещает файл с одного пути (source_path) на другой путь (destination_path).
+    """
+    # Перемещаем файл из source_path в destination_path
+    os.rename(source_path, destination_path)
+    
+    
+def rename_file(file_path, new_name):
+    """
+    Функция переименовывает файл с заданным путем (file_path) на новое имя (new_name).
+    """
+    # Переименовываем файл
+    os.rename(file_path, os.path.join(os.path.dirname(file_path), new_name))
+    
+    
+def search_files(name=None, extension=None):
+    """
+    Функция выполняет поиск файлов по заданному имени или расширению.
+    Если указано только имя, функция ищет все файлы с заданным именем.
+    Если указано только расширение, функция ищет все файлы с заданным расширением.
+    Если указаны и имя, и расширение, функция ищет файлы, удовлетворяющие обоим условиям.
+    """
+    # Получаем список всех файлов и папок в текущей директории и ее поддиректориях
+    all_files = []
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            all_files.append(os.path.join(root, file))
+            
+    # Фильтруем список файлов по заданным условиям
+    filtered_files = []
+    for file in all_files:
+        if name and extension:
+            if os.path.basename(file).startswith(name) and file.endswith(extension):
+                filtered_files.append(file)
+        elif name:
+            if os.path.basename(file).startswith(name):
+                filtered_files.append(file)
+        elif extension:
+            if file.endswith(extension):
+                filtered_files.append(file)
+                
+    # Выводим список найденных файлов
+    for file in filtered_files:
+        print(file)
+
+# Тестирование функционала
+
+# Отобразить содержимое текущей директории
+show_current_directory()
+
+# Создать новый файл
+create_file('test_file.txt')
+
+# Создать новую директорию
+create_directory('test_directory')
+
+# Удалить существующий файл
+delete_file('test_file.txt')
+
+# Удалить существующую директорию
+delete_directory('test_directory')
+
+# Переместить файл
+move_file('source_path/file.txt', 'destination_path/file.txt')
+
+# Переименовать файл
+rename_file('file.txt', 'new_file.txt')
+
+# Найти файлы по имени
+search_files(name='test')
+
+# Найти файлы по расширению
+search_files(extension='.txt')
+
+# Найти файлы по имени и расширению
+search_files(name='test', extension='.txt')

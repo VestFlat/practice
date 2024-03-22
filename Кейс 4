@@ -1,0 +1,31 @@
+import random
+
+# Функция для генерации случайного массива чисел
+def generate_random_array(size):
+    return [random.randint(0, 100) for _ in range(size)]
+
+# Функция для сортировки массива пузырьком
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n-1):
+        for j in range(n-1-i):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+
+# Массивы различных размеров
+array_sizes = [10, 50, 100, 1000]
+
+# Обработка наборов данных
+for size in array_sizes:
+    # Генерация случайного массива чисел
+    arr = generate_random_array(size)
+
+    # Вывод исходного массива перед сортировкой
+    print(f"Исходный массив ({size}): ", arr)
+
+    # Сортировка массива
+    sorted_arr = bubble_sort(arr)
+
+    # Вывод отсортированного массива
+    print(f"Отсортированный массив ({size}): ", sorted_arr)
